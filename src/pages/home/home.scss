@@ -1,0 +1,27 @@
+.home-page {
+    background: white;
+    padding: 1% 8% 1% 8%;
+    height: auto;
+    .what_we_do_contact {
+        width: 100%;
+        position: relative;
+        .what-we-do {
+            width: 60%;
+            float: left;
+        }
+        .contact {
+            width: 40%;
+            float: left;
+        }
+    }
+    .cart-item {
+        clear: both;
+        width: 100%;
+        .item {
+            width: calc((84%)/3);
+            float: left;
+            padding: 5px;
+           // background: red;
+        }
+    }
+}
