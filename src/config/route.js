@@ -1,26 +1,31 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import LoginPage from '../pages/login/login';
-import DashBoard from '../pages/dashboard/dashboard';
-import Profile from '../pages/profile/profile';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomePage from '../pages/home/home';
+import LoginPage from '../pages/login/login';
+import ProfilePage from '../pages/profile/profile';
+import DashboardPage from '../pages/dashboard/dashboard';
 import TuyenDung from '../pages/tuyen-dung/tuyen-dung';
+import Auth from '../services/auth/auth';
 
-class MainRouter extends React.Component {
-    render() {
-        return(
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/' exact component={ LoginPage }></Route>
-                    <Route path='/login' exact component={ LoginPage }></Route>
-                    <Route path='/dashboard' exact component={ DashBoard }></Route>
-                    <Route path='/profile' exact component={ Profile }></Route>
-                    <Route path='/home' exact component={ HomePage }></Route>
-                    <Route path='/tuyen-dung' exact component={ TuyenDung }></Route>
-                </Switch>
-            </BrowserRouter>
-        )
-    }
-}
 
+const MainRouter = () => (
+    <main>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path='/' render={
+                    () => (
+                        <Auth orRedirectTo='/login' orRender= {
+                            <ProfilePage></ProfilePage>
+                        }></Auth>
+                    )
+                }></Route>
+                <Route path='/login' exact component={ LoginPage }></Route>
+                <Route path='/profile' exact component={ ProfilePage }></Route>
+                <Route path='/dashboard' exact component={ DashboardPage }></Route>
+                <Route path='/home' exact component={ HomePage }></Route>
+                <Route path='/tuyen-dung' component={ TuyenDung }></Route>
+            </Switch>
+        </BrowserRouter>
+    </main>
+)
 export default MainRouter
