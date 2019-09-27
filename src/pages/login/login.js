@@ -3,6 +3,7 @@ import './login.scss';
 import {Button} from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import {Redirect } from 'react-router-dom'; 
+import { locale } from '../../config/locale';
 
 class LoginPage extends React.Component {
    constructor(){
@@ -38,7 +39,8 @@ class LoginPage extends React.Component {
                   </div>
                </div>
                <div>
-                  <Button onClick={(e) => this.onClick(e)}> Login </Button>
+                  <Button onClick={(e) => this.onClick(e)}> {locale.login} </Button>
+ 
                </div>
 
             </div>

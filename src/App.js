@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import LoginPage from './pages/login/login';
-import Profile from './pages/profile/profile';
-import DashBoard from './pages/dashboard/dashboard';
 import MainRouter from './config/route';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 import MenuBar from './components/menu-bar/menu-bar';
-import HeaderElement from './components/header/header';
-import HomePage from './pages/home/home';
-import FooterElement from './components/footer/footer';
+import Profile from './pages/profile/profile';
+import Cookies from 'universal-cookie';
+import { locale } from './config/locale';
+import { ListenService } from './services/listen';
 
-function Xu() {
-  return (
-    <React.Fragment>
-      <div className="Xu">
+class App extends React.Component {
+  constructor() {
+    super()
+    let cookie = new Cookies()
+    let lang = cookie.get('lang') === undefined ? 'vi' : cookie.get('lang')
+    locale.setLanguage(lang)
+  }
+  componentDidMount() {
+    let self = this
+    ListenService.onChangeLang().subscribe(
+      () => {
+        self.setState({})
+      }
+    )
+  }
+  render() {
+    return (
+      <div className='App'>
         <MenuBar></MenuBar>
-        <HeaderElement></HeaderElement>
+        {/* <Header></Header> */}
         <MainRouter></MainRouter>
-        <FooterElement></FooterElement>
+        <Footer></Footer>
+        <div className='footer'></div>
       </div>
-    </React.Fragment>
-  );
+    )
+  }
 }
-
-export default Xu;
+export default App;

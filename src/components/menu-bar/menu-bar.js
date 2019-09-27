@@ -1,9 +1,11 @@
 import React from 'react';
-import '/.menu-bar.scss';
+import './menu-bar.scss';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import { locale } from '../../config/locale';
 import Cookies from 'universal-cookie';
-import { ListenService } from '../../services/auth/listen';
+import { ListenService } from '../../services/listen';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 class MenuBar extends React.Component {
     constructor() {
@@ -17,10 +19,19 @@ class MenuBar extends React.Component {
         this.setState({}) // update request
         ListenService.switchLang(lang)
     }
+    checkCurrentLangActive = (lang) => {
+        let cookie = new Cookies()
+        let lang_ = cookie.get('lang') || 'vi'
+        if (lang_ === lang) {
+            return <FontAwesomeIcon icon={faCheck} className='icon mr-1' />
+        }
+    }
+
+
     render() {
         return (
             <React.Fragment>
-                <Navbar bg="light" expand="lg">
+                <Navbar bg="light" expand="lg" className='main-menu'>
                     <Navbar.Brand href="/">Green Academy</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -41,13 +52,21 @@ class MenuBar extends React.Component {
                         </Nav>
                         <Form inline>
                             <FormControl type="text" placeholder={locale.search} className="mr-sm-2" />
-                            <Button variant="outline-success">{locale.search}</Button>
+                            <Button variant="outline-success" className="w100">{locale.search}</Button>
                         </Form>
-                        <NavDropdown title={locale.lang} id="basic-nav-dropdown">
-                            <NavDropdown.Item onSelect={() => this.switchLanguage('vi')}>{locale.vi}</NavDropdown.Item>
-                            <NavDropdown.Item onSelect={() => this.switchLanguage('en')}>{locale.en}</NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link href="/">{locale.logout}</Nav.Link>
+                        <Nav>
+                            <NavDropdown title={locale.lang} id="basic-nav-dropdown">
+                                <NavDropdown.Item onSelect={() => this.switchLanguage('vi')} >
+                                    {this.checkCurrentLangActive('vi')}
+                                    {locale.vi}
+                                </NavDropdown.Item>
+                                <NavDropdown.Item onSelect={() => this.switchLanguage('en')}>
+                                    {this.checkCurrentLangActive('en')}
+                                    {locale.en}
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link href="#">{locale.logout}</Nav.Link>
+                        </Nav>
                     </Navbar.Collapse>
                 </Navbar>
 
