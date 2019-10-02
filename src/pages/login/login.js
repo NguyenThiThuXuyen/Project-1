@@ -1,6 +1,5 @@
 import React from 'react';
 import './login.scss';
-import { Button } from 'react-bootstrap';
 import Cookies from 'universal-cookie';
 import { Redirect } from 'react-router-dom';
 import { locale } from '../../config/locale';
